@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YourBrand — Professional Membership Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark-bg: #0a0e12;
+            --dark-card: #12171d;
+            --dark-border: rgba(255, 255, 255, 0.08);
+            #6366f1: #6366f1;
+            #8b5cf6: #8b5cf6;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.65);
+            --text-muted: rgba(255, 255, 255, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        ::selection {
+            background: var(#6366f1);
+            color: var(--dark-bg);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.25rem 3rem;
+            backdrop-filter: blur(20px);
+            background: rgba(10, 14, 18, 0.95);
+            border-bottom: 1px solid var(--dark-border);
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            position: relative;
+            display: inline-block;
+            width: 140px;
+            height: 51px;
+            cursor: pointer;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .join-btn {
+            background: linear-gradient(135deg, var(#6366f1), var(#8b5cf6));
+            color: var(--dark-bg);
+            border: none;
+            padding: 0.625rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .join-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 217, 255, 0.3);
+        }
+
+        /* Feed Container */
+        .feed-container {
+            min-height: 100vh;
+            padding: 8rem 2rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .feed-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .feed-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .feed-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Post Grid */
+        .post-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .post-card {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .post-card:hover {
+            border-color: rgba(0, 217, 255, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .post-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .post-content {
+            padding: 2.5rem;
+        }
+
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-type {
+            background: rgba(0, 217, 255, 0.1);
+            color: var(#6366f1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .post-type.video {
+            background: rgba(255, 0, 170, 0.1);
+            color: var(#8b5cf6);
+        }
+
+        .post-type.resource {
+            background: rgba(179, 102, 255, 0.1);
+            color: #b366ff;
+        }
+
+        .post-date {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .post-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .post-excerpt {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--dark-border);
+        }
+
+        .read-time {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* Lock Badge */
+        .lock-badge {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 40px;
+            height: 40px;
+            background: rgba(10, 14, 18, 0.9);
+            border: 1.5px solid var(--dark-border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.125rem;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Locked Post */
+        .post-card.locked {
+            position: relative;
+        }
+
+        .post-card.locked .post-content {
+            filter: blur(2px);
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .locked-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 40%, rgba(10, 14, 18, 0.95) 70%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 3rem;
+            pointer-events: none;
+        }
+
+        .locked-content {
+            text-align: center;
+            pointer-events: auto;
+        }
+
+        .locked-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .locked-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 0.9375rem;
+        }
+
+        .unlock-btn {
+            background: linear-gradient(135deg, var(#6366f1), var(#8b5cf6));
+            color: var(--dark-bg);
+            border: none;
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .unlock-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 217, 255, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .feed-container {
+                padding: 6rem 1.5rem 3rem;
+            }
+
+            .post-content {
+                padding: 2rem 1.5rem;
+            }
+
+            .post-image {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo" onclick="window.location.href='/'">
+                <img src="https://via.placeholder.com/200x80/0a0e12/00d9ff?text=Your+Logo" alt="YourBrand">
+            </div>
+            <div class="nav-right">
+                <a href="/join.html" class="join-btn">Join Free</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Feed -->
+    <div class="feed-container">
+        <div class="feed-header">
+            <h1 class="feed-title">Build Your Professional Community</h1>
+            <p class="feed-description">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Share your expertise, connect with your audience, and grow your membership community.
+            </p>
+            <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="/join.html" class="join-btn" style="text-decoration: none; padding: 0.875rem 2rem; font-size: 1.0625rem;">Get Free Access</a>
+            </div>
+        </div>
+
+        <div class="post-grid">
+            <!-- Membership Starter Kit Resource -->
+            <article class="post-card locked">
+                <img src="https://via.placeholder.com/800x400/0a0e12/00d9ff?text=Feature+Image" alt="Membership Starter Kit" class="post-image">
+                <div class="post-content">
+                    <div class="post-meta">
+                        <span class="post-type resource">Resource</span>
+                        <span class="post-date">March 1, 2026</span>
+                    </div>
+                    <h2 class="post-title">Getting Started with Membership</h2>
+                    <p class="post-excerpt">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Essential resources and templates to launch your membership site successfully.
+                    </p>
+                    <div class="post-footer">
+                        <span class="read-time">PDF Download</span>
+                    </div>
+                </div>
+                <div class="locked-overlay">
+                    <div class="locked-content">
+                        <h3 class="locked-title">Sign in to download</h3>
+                        <p class="locked-description">Free membership unlocks all resources</p>
+                        <button class="unlock-btn" onclick="window.location.href='/join.html'">Sign In Free</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Community Building Resource -->
+            <article class="post-card locked">
+                <img src="https://media.licdn.com/dms/image/v2/D5622AQF7Zyji4aVWzA/feedshare-shrink_800/B56ZvTKJ1dHAAg-/0/1768774213261?e=1775088000&v=beta&t=2HY_8wKKjN9GEmjTnrZupDeEYA1oT0VTuFGDDjn4WDE" alt="Community Building Guide" class="post-image">
+                <div class="post-content">
+                    <div class="post-meta">
+                        <span class="post-type resource">Resource</span>
+                        <span class="post-date">February 18, 2026</span>
+                    </div>
+                    <h2 class="post-title">Building Your Community: Complete Guide</h2>
+                    <p class="post-excerpt">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Comprehensive analysis of successful membership strategies, engagement patterns, and monetization approaches.
+                    </p>
+                    <div class="post-footer">
+                        <span class="read-time">Full Report</span>
+                    </div>
+                </div>
+                <div class="locked-overlay">
+                    <div class="locked-content">
+                        <h3 class="locked-title">Sign in to access</h3>
+                        <p class="locked-description">Free membership unlocks all resources</p>
+                        <button class="unlock-btn" onclick="window.location.href='/join.html'">Sign In Free</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Content Creation Article -->
+            <article class="post-card locked">
+                <img src="https://media.licdn.com/dms/image/v2/D5612AQF97prmDFVAWg/article-cover_image-shrink_720_1280/B56ZyL3XIfJMAI-/0/1771873072394?e=1775088000&v=beta&t=CXp6y8krBCHLqYemhZGBXupgcqHkSD1giSaY5RRh1D4" alt="Content Creation" class="post-image">
+                <div class="post-content">
+                    <div class="post-meta">
+                        <span class="post-type">Article</span>
+                        <span class="post-date">February 24, 2026</span>
+                    </div>
+                    <h2 class="post-title">Content Creation Best Practices</h2>
+                    <p class="post-excerpt">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Practical strategies for creating engaging content that resonates with your audience.
+                    </p>
+                    <div class="post-footer">
+                        <span class="read-time">8 min read</span>
+                    </div>
+                </div>
+                <div class="locked-overlay">
+                    <div class="locked-content">
+                        <h3 class="locked-title">Sign in to read</h3>
+                        <p class="locked-description">Free membership unlocks all articles</p>
+                        <button class="unlock-btn" onclick="window.location.href='/join.html'">Sign In Free</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Email Growth Article -->
+            <article class="post-card locked">
+                <img src="https://media.licdn.com/dms/image/v2/D5612AQHPLJ25o9iGtQ/article-cover_image-shrink_720_1280/B56ZwzpzzzKQAI-/0/1770393124846?e=1775088000&v=beta&t=9lvmqWldZaQgzsjc69Fm-MYKeSkThGoI9q-Be4s54C8" alt="Email Growth" class="post-image">
+                <div class="post-content">
+                    <div class="post-meta">
+                        <span class="post-type">Article</span>
+                        <span class="post-date">January 22, 2026</span>
+                    </div>
+                    <h2 class="post-title">Growing Your Email List</h2>
+                    <p class="post-excerpt">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proven techniques for building and nurturing your subscriber base organically.
+                    </p>
+                    <div class="post-footer">
+                        <span class="read-time">6 min read</span>
+                    </div>
+                </div>
+                <div class="locked-overlay">
+                    <div class="locked-content">
+                        <h3 class="locked-title">Sign in to read</h3>
+                        <p class="locked-description">Free membership unlocks all articles</p>
+                        <button class="unlock-btn" onclick="window.location.href='/join.html'">Sign In Free</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Mapping the Human API Article -->
+            <article class="post-card locked">
+                <img src="https://via.placeholder.com/1200x630/0a0e12/00d9ff?text=Article+Cover" alt="Human API" class="post-image">
+                <div class="post-content">
+                    <div class="post-meta">
+                        <span class="post-type">Article</span>
+                        <span class="post-date">January 15, 2026</span>
+                    </div>
+                    <h2 class="post-title">Member Engagement Strategies</h2>
+                    <p class="post-excerpt">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. A comprehensive framework for understanding and optimizing member interactions.
+                    </p>
+                    <div class="post-footer">
+                        <span class="read-time">14 min read</span>
+                    </div>
+                </div>
+                <div class="locked-overlay">
+                    <div class="locked-content">
+                        <h3 class="locked-title">Sign in to read</h3>
+                        <p class="locked-description">Free membership unlocks all articles</p>
+                        <button class="unlock-btn" onclick="window.location.href='/join.html'">Sign In Free</button>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <!-- YourBrand Explainer -->
+        <div style="margin: 4rem 0 0 0; padding: 3rem; background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px;">
+            <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(#6366f1), var(#8b5cf6)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">What is YourBrand?</h3>
+            <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem; font-size: 1.1rem;">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. A comprehensive platform for sharing knowledge and building meaningful connections with your community. Professional resources without the complexity.
+            </p>
+            <p style="color: var(--text-secondary); line-height: 1.7; font-size: 1.1rem;">
+                Access exclusive content, downloadable templates, and expert insights. Get the frameworks, the tools, and the strategies to grow your audience. Free to access. Pay what you want if it helps you succeed.
+            </p>
+        </div>
+    </div>
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="auth.js"></script>
+
+    <script>
+        // Auto-redirect logged-in users to feed
+        (async () => {
+            try {
+                const user = await getCurrentUser();
+                if (user) {
+                    window.location.href = '/feed.html';
+                }
+            } catch (error) {
+                // User not logged in, show landing page
+            }
+        })();
+
+        // Navigate to post with auth check
+        async function navigateToPost(url) {
+            try {
+                const user = await getCurrentUser();
+                if (user) {
+                    window.location.href = url;
+                } else {
+                    window.location.href = '/join.html';
+                }
+            } catch (error) {
+                console.error('Auth check failed:', error);
+                window.location.href = '/join.html';
+            }
+        }
+    </script>
+    <!-- Breathing Component -->
+</body>
+</html>

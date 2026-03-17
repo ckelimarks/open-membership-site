@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Engaging Communities — YourBrand</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark-bg: #0a0e12;
+            --dark-card: #12171d;
+            --dark-border: rgba(255, 255, 255, 0.08);
+            #6366f1: #6366f1;
+            #8b5cf6: #8b5cf6;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.65);
+            --text-muted: rgba(255, 255, 255, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.03;
+            z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        ::selection {
+            background: var(#6366f1);
+            color: var(--dark-bg);
+        }
+
+        /* Navigation */
+        nav.top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.25rem 3rem;
+            backdrop-filter: blur(20px);
+            background: rgba(10, 14, 18, 0.95);
+            border-bottom: 1px solid var(--dark-border);
+        }
+
+        .nav-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            position: relative;
+            display: inline-block;
+            width: 140px;
+            height: 51px;
+            cursor: pointer;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .back-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--text-primary);
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(#6366f1), var(#8b5cf6));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+
+        /* Article Container */
+        .article-container {
+            min-height: 100vh;
+            padding: 8rem 2rem 4rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .article-type {
+            background: rgba(0, 217, 255, 0.1);
+            color: var(#6366f1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .article-date {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .read-time {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .article-title {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Article Content */
+        .article-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .article-content h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .article-content ul, .article-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        .article-content blockquote {
+            border-left: 3px solid var(#6366f1);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .article-content code {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 0.9em;
+        }
+
+        .article-content pre {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            padding: 1.5rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .article-content pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .article-content img {
+            width: 100%;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        /* Callout Boxes */
+        .callout {
+            background: rgba(0, 217, 255, 0.05);
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .callout-title {
+            font-weight: 700;
+            color: var(#6366f1);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Download Section */
+        .download-section {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .download-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .download-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, var(#6366f1), var(#8b5cf6));
+            color: var(--dark-bg);
+            border: none;
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Next/Previous Navigation */
+        .article-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding: 2rem 0;
+            border-top: 1px solid var(--dark-border);
+            border-bottom: 1px solid var(--dark-border);
+        }
+
+        .article-nav-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            max-width: 45%;
+        }
+
+        .article-nav-item:hover .article-nav-title {
+            color: var(#6366f1);
+        }
+
+        .article-nav-item.prev {
+            align-items: flex-start;
+        }
+
+        .article-nav-item.next {
+            align-items: flex-end;
+            text-align: right;
+        }
+
+        .article-nav-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .article-nav-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: color 0.2s ease;
+        }
+
+        /* CTA Banner */
+        .cta-banner {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(255, 0, 170, 0.1));
+            border: 1px solid var(--dark-border);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-banner-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-banner-description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(#6366f1), var(#8b5cf6));
+            color: var(--dark-bg);
+            border: none;
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            nav.top-nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .article-container {
+                padding: 6rem 1.5rem 3rem;
+            }
+
+            .article-nav {
+                flex-direction: column;
+                gap: 1.5rem;
+                align-items: stretch;
+            }
+
+            .article-nav-item {
+                max-width: 100%;
+            }
+
+            .article-nav-item.next {
+                align-items: flex-start;
+                text-align: left;
+            }
+
+            .cta-banner {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="logo" onclick="window.location.href='index.html'">
+                <img src="https://via.placeholder.com/200x80/0a0e12/00d9ff?text=Your+Logo" alt="YourBrand">
+            </div>
+            <div class="nav-right">
+                <a href="feed.html" class="back-link">← Back to Feed</a>
+                <div class="user-avatar" onclick="window.location.href='account.html'">CK</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Article Container -->
+    <article class="article-container">
+        <!-- Header -->
+        <header class="article-header">
+            <div class="article-meta">
+                <span class="article-type">Article</span>
+                <span class="article-date">March 5, 2026</span>
+                <span>•</span>
+                <span class="read-time">12 min read</span>
+            </div>
+            <h1 class="article-title">Building Engaging Communities: A Framework</h1>
+            <p class="article-description">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Most platforms claim to build communities but few succeed. Here's the framework for designing systems that genuinely engage and retain members.
+            </p>
+        </header>
+
+        <!-- Content -->
+        <div class="article-content">
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Over years of building community platforms, membership sites, and engagement systems, one truth has emerged: <strong>engagement isn't accidental</strong>.
+            </p>
+
+            <p>
+                Most platforms are really just content repositories with a membership layer. They provide access, but they don't create genuine engagement. Real community requires intentional architecture.
+            </p>
+
+            <h2>The Three Layers of Community</h2>
+
+            <p>
+                Every successful membership platform operates on three layers:
+            </p>
+
+            <h3>1. Discovery — Helping Members Find Value</h3>
+
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. This isn't about showing everything to everyone. It's about surfacing <em>the right content</em> to the right members at the right time.
+            </p>
+
+            <div class="callout">
+                <div class="callout-title">💡 Key Insight</div>
+                <p style="margin: 0;">
+                    The best content platforms don't optimize for volume. They optimize for relevance. One valuable resource beats 100 mediocre ones.
+                </p>
+            </div>
+
+            <p>
+                Effective discovery requires:
+            </p>
+
+            <ul>
+                <li><strong>Relevance signals</strong> — What matters most to each member? Interests, goals, experience level, current challenges.</li>
+                <li><strong>Timing optimization</strong> — Is this content relevant to where the member is in their journey right now?</li>
+                <li><strong>Quality curation</strong> — Not all content deserves equal prominence. Editorial judgment matters.</li>
+            </ul>
+
+            <h3>2. Activation — Making Engagement Easy</h3>
+
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Members have found your content. Now what? This is where most platforms fail. They assume people will "just participate."
+            </p>
+
+            <p>
+                They won't. Not without clear pathways.
+            </p>
+
+            <p>
+                Great activation provides:
+            </p>
+
+            <ul>
+                <li><strong>Clear next steps</strong> — An obvious action that creates immediate value.</li>
+                <li><strong>Guided experiences</strong> — Templates, frameworks, or workflows that provide structure without overwhelming.</li>
+                <li><strong>Low barriers</strong> — Members chose to be here. Make it easy to get started.</li>
+            </ul>
+
+            <blockquote>
+                "The best onboarding isn't clever—it's clear."
+            </blockquote>
+
+            <h3>3. Retention — Keeping Members Engaged</h3>
+
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. This is the layer almost everyone ignores. Members joined. They consumed content. Now what?
+            </p>
+
+            <p>
+                Engagement dies from neglect, not dissatisfaction. Your platform should actively fight churn:
+            </p>
+
+            <ul>
+                <li><strong>Timely reminders</strong> — "New content in your favorite topic. Here's what's fresh."</li>
+                <li><strong>Regular touchpoints</strong> — Recurring events or releases that give members reasons to return.</li>
+                <li><strong>Progress tracking</strong> — Show members their journey. "You've completed 5 courses. Here's what's next."</li>
+            </ul>
+
+            <h2>In Practice: How This Works</h2>
+
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Here's how this framework applies to successful membership platforms.
+            </p>
+
+            <p>
+                <strong>Discovery</strong> — Members indicate their interests and goals. The platform surfaces relevant content automatically. Personalized, not generic.
+            </p>
+
+            <p>
+                <strong>Activation</strong> — Clear calls-to-action guide members: "Start with this beginner course" or "Download this template." Not overwhelming. Just helpful direction.
+            </p>
+
+            <p>
+                <strong>Retention</strong> — The platform tracks progress. Surfaces new opportunities. Creates momentum and accountability.
+            </p>
+
+            <p>
+                Simple. Effective. Built on proven principles.
+            </p>
+
+            <h2>Common Mistakes to Avoid</h2>
+
+            <p>
+                Lorem ipsum dolor sit amet. Most membership platforms fail at one of these layers:
+            </p>
+
+            <ul>
+                <li><strong>They optimize for quantity, not quality.</strong> More content ≠ more value.</li>
+                <li><strong>They assume members know what to do next.</strong> They don't. Provide clear guidance.</li>
+                <li><strong>They stop after signup.</strong> First login isn't success. Long-term engagement is.</li>
+            </ul>
+
+            <h2>Your Homework</h2>
+
+            <p>
+                If you're building something in this space, audit your product:
+            </p>
+
+            <ol>
+                <li>How are you helping members find the <em>right</em> content, not just any content?</li>
+                <li>What friction exists between "I should do this" and members actually taking action?</li>
+                <li>Once members engage, what keeps them coming back?</li>
+            </ol>
+
+            <p>
+                Fix one layer at a time. All three need to work.
+            </p>
+        </div>
+
+        <!-- Download Section -->
+        <div class="download-section">
+            <div class="download-title">📦 Community Engagement Audit Template</div>
+            <p class="download-description">
+                Lorem ipsum dolor sit amet. A comprehensive template to evaluate your membership platform using this framework. Includes assessment rubrics and real examples.
+            </p>
+            <button class="btn-download">
+                ⬇ Download Template
+            </button>
+        </div>
+
+        <!-- Article Navigation -->
+        <div class="article-nav">
+            <a href="#" class="article-nav-item prev">
+                <span class="article-nav-label">← Previous</span>
+                <span class="article-nav-title">Getting Started: Platform Fundamentals</span>
+            </a>
+            <a href="#" class="article-nav-item next">
+                <span class="article-nav-label">Next →</span>
+                <span class="article-nav-title">Member Research Guide: Understanding Your Audience</span>
+            </a>
+        </div>
+
+        <!-- CTA Banner -->
+        <div class="cta-banner">
+            <h2 class="cta-banner-title">Want More Like This?</h2>
+            <p class="cta-banner-description">
+                Join to get weekly deep dives, video walkthroughs, and downloadable resources.
+            </p>
+            <button class="btn-primary" onclick="window.location.href='join.html'">
+                Become a Member
+            </button>
+        </div>
+    </article>
+    <!-- Breathing Component -->
+</body>
+</html>

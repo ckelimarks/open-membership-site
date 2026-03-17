@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Feed — YourBrand</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark-bg: #0a0e12;
+            --dark-card: #12171d;
+            --dark-border: rgba(255, 255, 255, 0.08);
+            #6366f1: #6366f1;
+            #8b5cf6: #8b5cf6;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.65);
+            --text-muted: rgba(255, 255, 255, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        ::selection {
+            background: var(#6366f1);
+            color: var(--dark-bg);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.25rem 3rem;
+            backdrop-filter: blur(20px);
+            background: rgba(10, 14, 18, 0.95);
+            border-bottom: 1px solid var(--dark-border);
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            position: relative;
+            display: inline-block;
+            width: 140px;
+            height: 51px;
+            cursor: pointer;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(#6366f1), var(#8b5cf6));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+        }
+
+        .member-badge {
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            color: var(#6366f1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Feed Container */
+        .feed-container {
+            min-height: 100vh;
+            padding: 8rem 2rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .feed-header {
+            margin-bottom: 3rem;
+        }
+
+        .feed-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .feed-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--dark-border);
+            padding-bottom: 1rem;
+        }
+
+        .filter-tab {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .filter-tab:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .filter-tab.active {
+            color: var(#6366f1);
+            background: rgba(0, 217, 255, 0.1);
+        }
+
+        /* Post Grid */
+        .post-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .post-card {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .post-card:hover {
+            border-color: rgba(0, 217, 255, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .post-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .post-content {
+            padding: 2.5rem;
+        }
+
+        .post-card.locked {
+            opacity: 0.7;
+        }
+
+        .post-card.locked::after {
+            content: '🔒';
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            font-size: 1.5rem;
+        }
+
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-type {
+            background: rgba(0, 217, 255, 0.1);
+            color: var(#6366f1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .post-type.video {
+            background: rgba(255, 0, 170, 0.1);
+            color: var(#8b5cf6);
+        }
+
+        .post-type.resource {
+            background: rgba(179, 102, 255, 0.1);
+            color: #b366ff;
+        }
+
+        .post-date {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .post-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .post-excerpt {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--dark-border);
+        }
+
+        .read-time {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .unlock-cta {
+            background: linear-gradient(135deg, var(#6366f1), var(#8b5cf6));
+            color: var(--dark-bg);
+            border: none;
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .unlock-cta:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.3;
+        }
+
+        .empty-state-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .empty-state-description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .feed-container {
+                padding: 6rem 1.5rem 3rem;
+            }
+
+            .post-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .filter-tabs {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo" onclick="window.location.href='index.html'">
+                <img src="https://via.placeholder.com/200x80/0a0e12/00d9ff?text=Your+Logo" alt="YourBrand">
+            </div>
+            <div class="nav-right">
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="feed.html">Feed</a>
+                    <a href="about.html">About</a>
+                </div>
+                <div class="user-menu" onclick="window.location.href='account.html'">
+                    <span class="member-badge">Supporter</span>
+                    <div class="user-avatar">CK</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Feed Container -->
+    <div class="feed-container">
+        <!-- Header -->
+        <div class="feed-header">
+            <h1 class="feed-title">Member Feed</h1>
+            <p class="feed-description">
+                Everything published, organized by type. New content drops every week.
+            </p>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
+            <button class="filter-tab active" onclick="filterPosts('all')">All Posts</button>
+            <button class="filter-tab" onclick="filterPosts('article')">Articles</button>
+            <button class="filter-tab" onclick="filterPosts('video')">Videos</button>
+            <button class="filter-tab" onclick="filterPosts('resource')">Resources</button>
+        </div>
+
+        <!-- Post Grid -->
+        <div class="post-grid">
+            <!-- Membership Starter Kit Resource -->
+            <div class="post-card" data-type="resource" onclick="window.location.href='article-identity-os.html'">
+                <img src="https://via.placeholder.com/800x400/0a0e12/00d9ff?text=Feature+Image" alt="Membership Starter Kit" class="post-image">
+                <div class="post-content">
+                    <div class="post-meta">
+                        <span class="post-type resource">Resource</span>
+                        <span class="post-date">March 1, 2026</span>
+                    </div>
+                    <h2 class="post-title">Getting Started with Membership</h2>
+                <p class="post-excerpt">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Essential frameworks, proven templates, and step-by-step guides. Free download.
+                </p>
+                <div class="post-footer">
+                    <span class="read-time">PDF Download</span>
+                </div>
+                </div>
+            </div>
+
+            <!-- Community Building Resource -->
+            <div class="post-card" data-type="resource" onclick="window.open('https://example.com/resources/community-guide', '_blank')">
+                <img src="https://media.licdn.com/dms/image/v2/D5622AQF7Zyji4aVWzA/feedshare-shrink_800/B56ZvTKJ1dHAAg-/0/1768774213261?e=1775088000&v=beta&t=2HY_8wKKjN9GEmjTnrZupDeEYA1oT0VTuFGDDjn4WDE" alt="Community Building Guide" class="post-image">
+                <div class="post-content">
+                    <div class="post-meta">
+                        <span class="post-type resource">Resource</span>
+                        <span class="post-date">February 18, 2026</span>
+                    </div>
+                    <h2 class="post-title">Building Your Community: Complete Guide</h2>
+                <p class="post-excerpt">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. 40+ page comprehensive analysis of successful membership platforms. Strategies, engagement patterns, monetization models, and proven approaches to community growth.
+                </p>
+                <div class="post-footer">
+                    <span class="read-time">Full Report</span>
+                </div>
+                </div>
+            </div>
+
+            <!-- Content Creation Article -->
+            <div class="post-card" data-type="article" onclick="window.location.href='article-content-creation.html'">
+                <img src="https://media.licdn.com/dms/image/v2/D5612AQF97prmDFVAWg/article-cover_image-shrink_720_1280/B56ZyL3XIfJMAI-/0/1771873072394?e=1775088000&v=beta&t=CXp6y8krBCHLqYemhZGBXupgcqHkSD1giSaY5RRh1D4" alt="Content Creation" class="post-image">
+                <div class="post-content">
+                    <div class="post-meta">
+                        <span class="post-type">Article</span>
+                        <span class="post-date">February 24, 2026</span>
+                    </div>
+                    <h2 class="post-title">Content Creation Best Practices</h2>
+                <p class="post-excerpt">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proven strategies for creating engaging content consistently. Practical workflows and systems to maintain quality at scale.
+                </p>
+                <div class="post-footer">
+                    <span class="read-time">8 min read</span>
+                </div>
+                </div>
+            </div>
+
+            <!-- Email Growth Article -->
+            <div class="post-card" data-type="article" onclick="window.location.href='article-email-growth.html'">
+                <img src="https://media.licdn.com/dms/image/v2/D5612AQHPLJ25o9iGtQ/article-cover_image-shrink_720_1280/B56ZwzpzzzKQAI-/0/1770393124846?e=1775088000&v=beta&t=9lvmqWldZaQgzsjc69Fm-MYKeSkThGoI9q-Be4s54C8" alt="Email List Growth" class="post-image">
+                <div class="post-content">
+                    <div class="post-meta">
+                        <span class="post-type">Article</span>
+                        <span class="post-date">January 22, 2026</span>
+                    </div>
+                    <h2 class="post-title">Growing Your Email List</h2>
+                <p class="post-excerpt">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Effective techniques for building and nurturing your subscriber base organically and sustainably.
+                </p>
+                <div class="post-footer">
+                    <span class="read-time">6 min read</span>
+                </div>
+                </div>
+            </div>
+
+            <!-- Mapping the Human API Article -->
+            <div class="post-card" data-type="article" onclick="window.location.href='article-human-api.html'">
+                <img src="https://via.placeholder.com/1200x630/0a0e12/00d9ff?text=Article+Cover" alt="Mapping the Human API" class="post-image">
+                <div class="post-content">
+                    <div class="post-meta">
+                        <span class="post-type">Article</span>
+                        <span class="post-date">January 15, 2026</span>
+                    </div>
+                    <h2 class="post-title">Member Engagement Strategies</h2>
+                <p class="post-excerpt">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. A comprehensive framework for understanding and optimizing member interactions across all touchpoints.
+                </p>
+                <div class="post-footer">
+                    <span class="read-time">14 min read</span>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="auth.js"></script>
+
+    <script>
+        // Auth guard - redirect if not logged in
+        (async () => {
+            const user = await requireAuth();
+            if (user) {
+                console.log('Logged in as:', user.email);
+                // You could update the UI with user info here
+            }
+        })();
+
+        function filterPosts(type) {
+            // Update active tab
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Filter posts
+            const posts = document.querySelectorAll('.post-card');
+            posts.forEach(post => {
+                if (type === 'all') {
+                    post.style.display = 'block';
+                } else {
+                    const postType = post.getAttribute('data-type');
+                    if (postType === type) {
+                        post.style.display = 'block';
+                    } else {
+                        post.style.display = 'none';
+                    }
+                }
+            });
+        }
+    </script>
+
+    <!-- Breathing Component -->
+</body>
+</html>

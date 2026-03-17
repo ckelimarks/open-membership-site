@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — YourBrand</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark-bg: #0a0e12;
+            --dark-card: #12171d;
+            --dark-border: rgba(255, 255, 255, 0.08);
+            #6366f1: #6366f1;
+            #8b5cf6: #8b5cf6;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.65);
+            --text-muted: rgba(255, 255, 255, 0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        nav, .about-container {
+            position: relative;
+            z-index: 10;
+        }
+
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            padding: 1.25rem 3rem;
+            backdrop-filter: blur(20px);
+            background: rgba(10, 14, 18, 0.95);
+            border-bottom: 1px solid var(--dark-border);
+        }
+
+        .nav-container {
+            max-width: 1600px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .logo {
+            position: relative;
+            display: inline-block;
+            width: 140px;
+            height: 51px;
+            cursor: pointer;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a {
+            color: var(--text-secondary); text-decoration: none;
+            font-weight: 500; transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--text-primary); }
+
+        .about-container {
+            min-height: 100vh; padding: 8rem 2rem 4rem;
+            max-width: 800px; margin: 0 auto;
+        }
+
+        .about-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .about-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(#6366f1), var(#8b5cf6));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .about-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+        }
+
+        .content-section {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .content-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(#6366f1), var(#8b5cf6));
+            color: var(--dark-bg);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-top: 1rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 217, 255, 0.4);
+        }
+
+        .link-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--dark-border);
+            color: var(--text-primary);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-top: 1rem;
+            margin-right: 1rem;
+        }
+
+        .link-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(#6366f1);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .social-links a:hover {
+            color: var(#6366f1);
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 1rem 1.5rem; }
+            .about-container { padding: 6rem 1.5rem 3rem; }
+            .content-section { padding: 2rem; }
+            .nav-links { gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo" onclick="window.location.href='/'">
+                <img src="https://via.placeholder.com/200x80/0a0e12/00d9ff?text=Your+Logo" alt="YourBrand">
+            </div>
+            <div class="nav-links">
+                <a href="/feed.html">Feed</a>
+                <a href="/about.html">About</a>
+                <a href="/account.html">Account</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="about-container">
+        <div class="about-header">
+            <h1 class="about-title">About YourBrand</h1>
+            <p class="about-subtitle">Your Professional Platform — Your membership site template</p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">What is this?</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. YourBrand is a comprehensive platform for sharing professional knowledge and building meaningful communities. No unnecessary complexity. Just practical resources, proven templates, and insights that drive results.
+            </p>
+            <p>
+                You'll find in-depth guides, video tutorials, case study breakdowns, and downloadable resources for everything we publish. This isn't a traditional course or rigid framework—it's a living library of actionable strategies and tools.
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Who builds this?</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Created by professionals passionate about helping others build thriving membership communities. Share your knowledge, connect with supporters, and grow your audience.
+            </p>
+            <p>
+                With over a decade of experience creating platforms that genuinely serve their communities—from educational content platforms to specialized tools and membership systems—we understand what it takes to build sustainable creator businesses.
+            </p>
+            <p>
+                We're dedicated to creating resources that help you maintain meaningful connections with your audience. Most of our energy goes into understanding what members truly need, conducting user research, and building tools that deliver real value.
+            </p>
+            <a href="https://example.com" target="_blank" class="link-button">View Portfolio</a>
+            <a href="https://example.com/work" target="_blank" class="link-button">See Our Work</a>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">What you get</h2>
+            <p>
+                <strong>Free access includes:</strong> All articles, videos, resources, and open-source code. Everything I publish is free to access. No paywalls, no bait-and-switch.
+            </p>
+            <p>
+                <strong>Supporter tier ($5+/month):</strong> Same content, but you're helping me dedicate more time to building and documenting in public. Think of it as pay-what-you-want patronage. You get early access to new builds and the satisfaction of supporting work you find useful.
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Connect</h2>
+            <div class="social-links">
+                <a href="https://twitter.com/example" target="_blank">X (Twitter)</a>
+                <a href="https://linkedin.com/in/example" target="_blank">LinkedIn</a>
+                <a href="https://youtube.com/@example" target="_blank">YouTube</a>
+                <a href="https://github.com/example" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="auth.js"></script>
+    <!-- Breathing Component -->
+</body>
+</html>

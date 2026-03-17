@@ -1,0 +1,9 @@
+{
+  "name": "open-membership-site",
+  "version": "1.0.0",
+  "description": "Free, open-source membership site template",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.4",
+    "stripe": "^13.10.0"
+  }
+}
