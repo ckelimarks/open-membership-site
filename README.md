@@ -235,3 +235,5 @@ Built with ❤️ for indie creators who want to own their audience and build su
 **Questions?** Open an issue!
 
 **Found this useful?** Give it a ⭐️ on GitHub!
+
+**See it in action:** [sutra.christopherkmarks.com](https://sutra.christopherkmarks.com) - Live example of this template
